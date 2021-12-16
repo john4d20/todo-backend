@@ -68,7 +68,7 @@ public class TodoIntegrationTest {
     }
 
     @Test
-    public void should_return_updated_company_when_update_company_given_company_company_id() throws Exception {
+    public void should_return_updated_todo_when_update_todo_given_id() throws Exception {
         //given
         Todo todo = todoRepository.save(new Todo("test", true));
         String todoAsJson = "{\n" +
@@ -83,6 +83,15 @@ public class TodoIntegrationTest {
                 .andExpect(jsonPath("$.id").isString())
                 .andExpect(jsonPath("$.content").value("test"))
                 .andExpect(jsonPath("$.done").value(true));
+    }
+
+    @Test
+    void should_delete_todo_when_perform_delete_given_todo() throws Exception {
+
+
+        Todo todo = todoRepository.save(new Todo("test", true));
+        mockMvc.perform(MockMvcRequestBuilders.delete("/todos/" + todo.getId()))
+                .andExpect(status().isNoContent());
     }
 
 }
