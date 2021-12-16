@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -46,6 +47,18 @@ public class TodoServiceTest {
 
         final Todo actual = todoService.get(id);
         assertEquals(todo, actual);
+    }
+
+    @Test
+    void should_return_todo_list_when_perform_get_nothing() {
+        Todo todo = new Todo("test", true);
+        todoService.add(new Todo("test", true));
+        todoService.add(new Todo("test", true));
+        List<Todo> todoList = Arrays.asList(todo,todo);
+        when(todoRepository.findAll()).thenReturn(todoList);
+
+        final List<Todo> actual = todoService.getAll();
+        assertEquals(todoList, actual);
     }
 
 //    put
