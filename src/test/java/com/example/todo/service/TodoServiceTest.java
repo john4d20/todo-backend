@@ -4,6 +4,7 @@ import com.example.todo.model.Todo;
 import com.example.todo.repository.TodoRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -13,7 +14,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class TodoServiceTest {
@@ -57,6 +58,21 @@ public class TodoServiceTest {
 
         final Todo actual = todoService.update(id,todo);
         assertEquals(todo, actual);
+    }
+
+    @Test
+    void should_confirm_function_run_one_times_when_delete_todo_given_id() {
+        //given
+        Todo todo = new Todo("test", true);
+        todoService.add(todo);
+
+        //when
+        todoService.remove(todo.getId());
+        final ArgumentCaptor<Todo> employeeArgumentCaptor = ArgumentCaptor.forClass(Todo.class);
+
+        //then
+        verify(todoRepository, times(1)).deleteById(todo.getId());
+
     }
 
 
