@@ -62,9 +62,9 @@ public class TodoIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(todoAsJson))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$id").isString())
-                .andExpect(jsonPath("$content").value("test"))
-                .andExpect(jsonPath("$done").value(true));
+                .andExpect(jsonPath("$.id").isString())
+                .andExpect(jsonPath("$.content").value("test"))
+                .andExpect(jsonPath("$.done").value(true));
     }
 
     @Test
