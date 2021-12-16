@@ -25,4 +25,11 @@ public class TodoService {
     }
 
 
+    public Todo update(String id, Todo todoUpdate) {
+        if (todoRepository.existsById(id)) {
+            todoUpdate.setId(id);
+            return todoRepository.save(todoUpdate);
+        }
+        throw new TodoNotFoundException();
+    }
 }
