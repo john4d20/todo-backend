@@ -51,21 +51,21 @@ public class TodoIntegrationTest {
                 .andExpect(jsonPath("$[0].done").value(true));
     }
 
-//    @Test
-//    public void should_return_todo_when_create_todo_given_todo() throws Exception {
-//
-//        String todoAsJson = "{\n" +
-//                "    \"content\" : \"test\",\n" +
-//                "    \"done\": true\n" +
-//                "}";
-//        mockMvc.perform(MockMvcRequestBuilders.post("/todos")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(todoAsJson))
-//                .andExpect(status().isCreated())
-//                .andExpect(jsonPath("$[0].id").isString())
-//                .andExpect(jsonPath("$[0].content").value("test"))
-//                .andExpect(jsonPath("$[0].done").value(true));
-//    }
+    @Test
+    public void should_return_todo_when_create_todo_given_todo() throws Exception {
+
+        String todoAsJson = "{\n" +
+                "    \"content\" : \"test\",\n" +
+                "    \"done\": true\n" +
+                "}";
+        mockMvc.perform(MockMvcRequestBuilders.post("/todos")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(todoAsJson))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$id").isString())
+                .andExpect(jsonPath("$content").value("test"))
+                .andExpect(jsonPath("$done").value(true));
+    }
 
     @Test
     public void should_return_updated_company_when_update_company_given_company_company_id() throws Exception {
