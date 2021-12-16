@@ -22,6 +22,7 @@ public class TodoServiceTest {
     @Mock
     private TodoRepository todoRepository;
 
+//    post create
     @Test
     void should_return_todo_when_perform_add_given_no_todo() {
         //given
@@ -35,6 +36,7 @@ public class TodoServiceTest {
         assertEquals(todo, actual);
     }
 
+//    get
     @Test
     void should_return_todo_when_perform_get_given_id() {
         Todo todo = new Todo("test", true);
@@ -42,6 +44,20 @@ public class TodoServiceTest {
         when(todoRepository.findById(id)).thenReturn(java.util.Optional.of(todo));
 
         final Todo actual = todoService.get(id);
-
+        assertEquals(todo, actual);
     }
+
+//    put
+    @Test
+    void should_return_todo_when_perform_update_given_todo() {
+        Todo todo = new Todo("test", true);
+        String id = todo.getId();
+        when(todoRepository.existsById(id)).thenReturn(true);
+        when(todoRepository.save(todo)).thenReturn(todo);
+
+        final Todo actual = todoService.update(id,todo);
+        assertEquals(todo, actual);
+    }
+
+
 }
