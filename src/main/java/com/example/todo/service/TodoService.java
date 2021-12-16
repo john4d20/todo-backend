@@ -32,4 +32,8 @@ public class TodoService {
         }
         throw new TodoNotFoundException();
     }
+
+    public void remove(String id) {
+        todoRepository.deleteById(id);
+    }
 }
