@@ -1,4 +1,6 @@
 package com.example.todo.service;
+import com.example.todo.exception.ContentNotFoundException;
+import com.example.todo.exception.DoneNotFoundException;
 import com.example.todo.exception.TodoNotFoundException;
 import com.example.todo.model.Todo;
 import com.example.todo.repository.TodoRepository;
@@ -24,13 +26,22 @@ public class TodoService {
         return todoRepository.findById(id).orElseThrow(TodoNotFoundException::new);
     }
 
-
-    public Todo update(String id, Todo todoUpdate) {
-        if (todoRepository.existsById(id)) {
-            todoUpdate.setId(id);
-            return todoRepository.save(todoUpdate);
+    public Todo update(String id, Todo todoUpdate) throws DoneNotFoundException {
+        Todo originTodo = todoRepository.findById(id).orElseThrow(TodoNotFoundException::new);
+        if (todoUpdate.getContent() != null) {
+            originTodo.setContent(todoUpdate.getContent());
         }
-        throw new TodoNotFoundException();
+        else {
+            throw new ContentNotFoundException();
+        }
+        if(todoUpdate.isDone() != null){
+            originTodo.setDone(todoUpdate.isDone());
+        }
+        else {
+            throw new DoneNotFoundException();
+        }
+        return todoRepository.save(originTodo);
+
     }
 
     public void remove(String id) {

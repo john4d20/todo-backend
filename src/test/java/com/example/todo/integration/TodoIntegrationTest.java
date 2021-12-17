@@ -12,11 +12,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.hamcrest.Matchers.hasSize;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -70,7 +65,7 @@ public class TodoIntegrationTest {
     @Test
     public void should_return_updated_todo_when_update_todo_given_id() throws Exception {
         //given
-        Todo todo = todoRepository.save(new Todo("test", true));
+        Todo todo = todoRepository.save(new Todo("test2", false));
         String todoAsJson = "{\n" +
                 "    \"content\" : \"test\",\n" +
                 "    \"done\": true\n" +

@@ -1,5 +1,6 @@
 package com.example.todo.service;
 
+import com.example.todo.exception.DoneNotFoundException;
 import com.example.todo.model.Todo;
 import com.example.todo.repository.TodoRepository;
 import org.junit.jupiter.api.Test;
@@ -63,14 +64,18 @@ public class TodoServiceTest {
 
 //    put
     @Test
-    void should_return_todo_when_perform_update_given_todo() {
-        Todo todo = new Todo("test", true);
-        String id = todo.getId();
-        when(todoRepository.existsById(id)).thenReturn(true);
-        when(todoRepository.save(todo)).thenReturn(todo);
-
-        final Todo actual = todoService.update(id,todo);
-        assertEquals(todo, actual);
+    void should_return_todo_when_perform_update_given_todo() throws DoneNotFoundException {
+        //given
+        Todo toDoItem = new Todo( "Do Homework", false);
+        Todo updatedToDoItem = new Todo( "Do CSS", true);
+        //when
+        when(todoRepository.findById(toDoItem.getId()))
+                .thenReturn(java.util.Optional.of(toDoItem));
+        when(todoRepository.save(toDoItem))
+                .thenReturn(updatedToDoItem);
+        //then
+        Todo actual = todoService.update(toDoItem.getId(), updatedToDoItem);
+        assertEquals(updatedToDoItem, actual);
     }
 
     @Test

@@ -9,7 +9,7 @@ public class Todo {
     @MongoId(FieldType.OBJECT_ID)
     private String id;
     private String content;
-    private boolean done;
+    private Boolean done;
 
     public Todo(String content, boolean done) {
         this.content = content;
@@ -27,7 +27,7 @@ public class Todo {
         return content;
     }
 
-    public boolean isDone() {
+    public Boolean isDone() {
         return done;
     }
 
@@ -39,7 +39,7 @@ public class Todo {
         this.content = content;
     }
 
-    public void setDone(boolean done) {
+    public void setDone(Boolean done) {
         this.done = done;
     }
 }

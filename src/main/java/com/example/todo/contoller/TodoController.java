@@ -1,11 +1,13 @@
 package com.example.todo.contoller;
 
+import com.example.todo.exception.DoneNotFoundException;
 import com.example.todo.model.Todo;
 import com.example.todo.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,8 +25,7 @@ public class TodoController {
 
     @GetMapping
     public List<Todo> getAll() {
-        return todoService.getAll().stream()
-                .collect(Collectors.toList());
+        return todoService.getAll();
     }
 
     @PostMapping
@@ -39,7 +40,7 @@ public class TodoController {
     }
 
     @PutMapping("/{id}")
-    public Todo update(@PathVariable String id, @RequestBody Todo todoUpdate) {
+    public Todo update(@PathVariable String id, @RequestBody Todo todoUpdate) throws DoneNotFoundException {
         return todoService.update(id, todoUpdate);
     }
 
